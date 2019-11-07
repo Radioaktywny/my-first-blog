@@ -5,11 +5,14 @@
 
 package com.marcin.witek.blog.domain;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
+@Data
 public class Post {
 
     @Id
