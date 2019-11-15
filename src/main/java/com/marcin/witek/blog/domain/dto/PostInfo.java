@@ -24,4 +24,7 @@ public class PostInfo {
     @NotNull
     private String text;
 
+    @NotNull
+    private CategoryInfo category;
+
 }

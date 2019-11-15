@@ -5,7 +5,10 @@
 
 package com.marcin.witek.blog.service;
 
+import com.marcin.witek.blog.domain.Category;
 import com.marcin.witek.blog.domain.Post;
+import com.marcin.witek.blog.domain.Role;
+import com.marcin.witek.blog.domain.User;
 import com.marcin.witek.blog.domain.dto.PostInfo;
 import com.marcin.witek.blog.repository.CategoryRepository;
 import com.marcin.witek.blog.repository.PostRepository;
@@ -48,8 +51,10 @@ public class PostService {
     }
 
     private void updatePost(Post post, PostInfo postInfo) {
-        fillPostWithDataFromPostInfo(postInfo, post);
-
+        if (post.getAuthor().getName().equals("admin")) {
+            //todo add checking with session -> is author adding this post ?
+            fillPostWithDataFromPostInfo(postInfo, post);
+        }
     }
 
     private PostInfo createPost(PostInfo postInfo) {
@@ -65,11 +70,20 @@ public class PostService {
     }
 
     private void fillPostWithDataFromPostInfo(PostInfo postInfo, Post post) {
-        post.setAuthor(userRepository.findAllByName("nuub").get(0));//todo
-        post.setCategory(categoryRepository.findAll().get(0));//todo
+        Optional<User> admin = userRepository.findOneByName("admin");//todo get this from session (which user adding this is author)
+        Optional<Category> category = categoryRepository.findOneByTitle(postInfo.getCategory().getName());
+        post.setAuthor(ensurePrivileges(admin.orElseThrow(() -> new IllegalArgumentException("Cannot find user with name : admin"))));
+        post.setCategory(category.orElseThrow(() -> new IllegalArgumentException("Cannot find category with name :" + postInfo.getCategory().getName())));
         post.setDate(Date.from(Instant.now()));
         post.setContent(postInfo.getText());
         post.setTitle(postInfo.getTitle());
+    }
+
+    private User ensurePrivileges(User user) {
+        if (user.getRole().equals(Role.USER)) {
+            throw new IllegalArgumentException("User has no privileges to perform this action");
+        }
+        return user;
     }
 
     public void delete(Long id) {
