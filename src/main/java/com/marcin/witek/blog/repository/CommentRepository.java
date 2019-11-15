@@ -5,8 +5,8 @@
 
 package com.marcin.witek.blog.repository;
 
-import com.marcin.witek.blog.domain.Author;
+import com.marcin.witek.blog.domain.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AuthorRepository extends JpaRepository<Author, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 }

@@ -6,7 +6,7 @@
 package com.marcin.witek.blog.controllers;
 
 import com.marcin.witek.blog.domain.Post;
-import com.marcin.witek.blog.domain.dto.PostDto;
+import com.marcin.witek.blog.domain.dto.PostInfo;
 import com.marcin.witek.blog.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public class PostRestController {
     }
 
     @PostMapping(path = "/post/admin")
-    public Post addPost(@Valid @RequestBody PostDto post) {
+    public PostInfo addPost(@Valid @RequestBody PostInfo post) {
         return postService.oddOrUpdate(post);
     }
 

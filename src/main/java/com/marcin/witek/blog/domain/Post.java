@@ -20,13 +20,10 @@ public class Post {
     private Long id;
 
     @NotNull
-    private Date date;
-
-    @NotNull
     private String title;
 
     @NotNull
-    private String text;
+    private String content;
 
     @NotNull
     @ManyToOne
@@ -34,6 +31,9 @@ public class Post {
 
     @NotNull
     @ManyToOne
-    private Author author;
+    private User author;
+
+    @NotNull
+    private Date date;
 
 }

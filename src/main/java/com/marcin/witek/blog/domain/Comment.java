@@ -5,27 +5,34 @@
 
 package com.marcin.witek.blog.domain;
 
-
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
-@Entity
 @Data
-public class Category {
+@Entity
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    private String title;
+    @ManyToOne
+    private User author;
 
     @NotNull
-    private String description;
+    private String nickName;
+
+    @NotNull
+    private String content;
+
+    @NotNull
+    @ManyToOne
+    private Post post;
+
+    @NotNull
+    private Date date;
 
 }

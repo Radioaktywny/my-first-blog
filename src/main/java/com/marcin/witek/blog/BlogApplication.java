@@ -5,9 +5,10 @@
 
 package com.marcin.witek.blog;
 
-import com.marcin.witek.blog.domain.Author;
+import com.marcin.witek.blog.domain.Role;
+import com.marcin.witek.blog.domain.User;
 import com.marcin.witek.blog.domain.Category;
-import com.marcin.witek.blog.repository.AuthorRepository;
+import com.marcin.witek.blog.repository.UserRepository;
 import com.marcin.witek.blog.repository.CategoryRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -22,18 +23,20 @@ public class BlogApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AuthorRepository authorRepository, CategoryRepository categoryRepository) {
+    public CommandLineRunner commandLineRunner(UserRepository userRepository, CategoryRepository categoryRepository) {
 		return (args -> {
-			Author entity = new Author();
-			entity.setName("author 1");
-			authorRepository.save(entity);
+			User entity = new User();
+			entity.setName("admin");
+			entity.setPassword("{noop}admin");
+			entity.setRole(Role.ADMIN);
+			userRepository.save(entity);
             Category category = new Category();
-            category.setName("Category 1");
+            category.setTitle("Category 1");
             category.setDescription("Super description");
             categoryRepository.save(category);
 
 
-			authorRepository.findAll().forEach(System.out::println);
+			userRepository.findAll().forEach(System.out::println);
 		});
     }
 

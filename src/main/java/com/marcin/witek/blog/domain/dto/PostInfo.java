@@ -14,7 +14,9 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDto {
+public class PostInfo {
+
+    private Long id;
 
     @NotNull
     private String title;
